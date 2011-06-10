@@ -1,0 +1,32 @@
+This is a really, really, simple HTTP PyPI-like server.
+
+It is intended to be used for companies or organizations that need a private
+PyPi.
+
+It literally supports four functions:
+
+    - Allows uploading of packages
+    - Downloading by package (or package and version)
+    - A / page that is navigatable with a web browser
+    - /pypi/ listing
+
+It does not support:
+
+    - Stopping you from overwriting a package with the same name / version
+    - Registering packages
+    - Any sort of ACLs
+
+To use it run "simplepypi". You can upload packages by:
+
+    - Adding this to your ~/.pypirc
+
+        [local]
+        username: <whatever>
+        password: <doesn't matter, see above>
+        repository: http://127.0.0.1:8000
+
+    - Running this on the setup.py of your favorite package:
+
+        python setup.py sdist upload -r local
+
+And that's it!
