@@ -11,6 +11,6 @@ setup(name='simplepypi',
         classifiers=['Programming Language :: Python', 'License :: OSI Approved :: BSD License'],
         license='BSD',
         packages=['simplepypi'],
-        scripts=['bin/simplepypi'],
+        scripts=['simplepypi/bin/simplepypi'],
         install_requires=['twisted', 'txroutes'],
         )
