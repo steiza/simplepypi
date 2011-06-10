@@ -18,12 +18,20 @@ It does not support:
 
 To use it run "simplepypi". You can upload packages by:
 
-    - Adding this to your ~/.pypirc
+    - Modify your ~/.pypirc so it looks like:
+
+        [distutils]
+        index-servers =
+            pypi
+            local
 
         [local]
         username: <whatever>
         password: <doesn't matter, see above>
         repository: http://127.0.0.1:8000
+
+        [pypi]
+        ...
 
     - Running this on the setup.py of your favorite package:
 
