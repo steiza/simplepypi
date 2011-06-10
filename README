@@ -29,4 +29,8 @@ To use it run "simplepypi". You can upload packages by:
 
         python setup.py sdist upload -r local
 
+    - Then, when you want to install packages from it you do:
+
+        pip install -i http://127.0.0.1:8000/pypi <your favorite package>
+
 And that's it!
