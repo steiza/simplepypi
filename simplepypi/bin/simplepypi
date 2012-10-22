@@ -69,7 +69,7 @@ class Controller(object):
 
         body += '</body></html>'
 
-        return body
+        return str(body)
 
     def package(self, request, package):
         package = package.lower()
@@ -86,7 +86,7 @@ class Controller(object):
             return return404(request)
 
         if os.path.exists(package_path):
-            return '<html><body><a href="/packages/%(package)s/%(version)s/%(package)s-%(version)s.tar.gz">%(package)s-%(version)s.tar.gz</a></body></html>' % {'package': package, 'version': versions[-1]}
+            return str('<html><body><a href="/packages/%(package)s/%(version)s/%(package)s-%(version)s.tar.gz">%(package)s-%(version)s.tar.gz</a></body></html>' % {'package': package, 'version': versions[-1]})
 
         else:
             return return404(request)
@@ -97,7 +97,7 @@ class Controller(object):
         path = get_package_path(package, version, want_file=True)
 
         if os.path.exists(path):
-            return '<html><body><a href="/packages/%(package)s/%(version)s/%(package)s-%(version)s.tar.gz">%(package)s-%(version)s.tar.gz</a></body></html>' % {'package': package, 'version': version}
+            return str('<html><body><a href="/packages/%(package)s/%(version)s/%(package)s-%(version)s.tar.gz">%(package)s-%(version)s.tar.gz</a></body></html>' % {'package': package, 'version': version})
 
         else:
             return return404(request)
