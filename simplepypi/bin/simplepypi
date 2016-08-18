@@ -130,7 +130,7 @@ def set_up_server(port):
     dispatcher.putChild('packages', File(package_path))
 
     factory = Site(dispatcher)
-    reactor.listenTCP(port, factory)
+    reactor.listenTCP(port, factory, interface='0.0.0.0')
 
     print 'Running on %d' % port
     reactor.run()
