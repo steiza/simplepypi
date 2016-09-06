@@ -1,7 +1,7 @@
 from setuptools import setup
 
 setup(name='simplepypi',
-        version='0.0.2',
+        version='0.1.0',
         author='Zach Steindler',
         author_email='steiza@coffeehousecoders.org',
         url='http://github.com/steiza/simplepypi',
@@ -12,5 +12,5 @@ setup(name='simplepypi',
         license='BSD',
         packages=['simplepypi'],
         scripts=['simplepypi/bin/simplepypi'],
-        install_requires=['twisted', 'txroutes'],
+        install_requires=['tornado'],
         )
