@@ -222,7 +222,7 @@ def set_up_server(addr, port):
     app = Application([
         ('/', IndexHandler),
         ('/pypi/', PypiHandler),
-        ('/pypi/([^/]*)', PypiPackageHandler),
+        ('/pypi/([^/]*)/', PypiPackageHandler),
         ('/pypi/([^/]*)/([^/]*)', PypiPackageVersionHandler),
         ('/packages', PackageBase),
         ('/packages/([^/]*)', PackageList),
