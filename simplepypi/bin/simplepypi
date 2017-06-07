@@ -150,6 +150,9 @@ class PackageBase(RequestHandler):
                     )
                 )
 
+        if len(contents) == 0:
+            self.write('Nothing to see here yet, try uploading a package!')
+
         self.write('</body></html>\n')
 
 
@@ -218,6 +221,9 @@ def set_up_server(addr, port):
         logger.addHandler(handler)
 
     package_path = os.path.join(os.path.dirname(__file__), 'packages')
+
+    if not os.path.exists(package_path):
+        os.makedirs(package_path)
 
     app = Application([
         ('/', IndexHandler),
