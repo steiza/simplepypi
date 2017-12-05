@@ -41,4 +41,9 @@ To use it run "simplepypi". You can upload packages by:
 
         pip install -i http://127.0.0.1:8000/pypi <your favorite package>
 
+To use the docker image, build and run:
+
+  docker build -t simplepypi .
+  docker run -it -p 8000:8000 simplepypi
+
 And that's it!
