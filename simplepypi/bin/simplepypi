@@ -197,7 +197,7 @@ class PackageDownload(RequestHandler):
                 )
             )
 
-        with open(path, 'r') as fd:
+        with open(path, 'rb') as fd:
             while True:
                 chunk = fd.read(1024**2)
 
