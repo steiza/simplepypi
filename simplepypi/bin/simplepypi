@@ -105,10 +105,13 @@ class PypiPackageHandler(RequestHandler):
             return
 
         if os.path.exists(package_path):
-            self.write(
-                '<html><body>{}</body></html>'.format(
-                    generate_package_link(package, versions[-1])
-                ))
+            self.write('<html><body>')
+            for version in versions:
+                self.write(
+                    '{}'.format(
+                        generate_package_link(package, version)
+                    ))
+            self.write('</body></html>')
 
         else:
             write404(self)
