@@ -107,10 +107,7 @@ class PypiPackageHandler(RequestHandler):
         if os.path.exists(package_path):
             self.write('<html><body>')
             for version in versions:
-                self.write(
-                    '{}'.format(
-                        generate_package_link(package, version)
-                    ))
+                self.write(generate_package_link(package, version))
             self.write('</body></html>')
 
         else:
