@@ -18,25 +18,49 @@ def write404(self):
         )
 
 
-def get_package_path(package, version=None, want_file=False):
+def is_filesystem_traversal(path):
+    return not os.path.abspath(path).startswith(
+            os.path.abspath(os.path.dirname(__file__))
+        )
+
+
+def get_package_path(package, version=None, want_file=False, filename=None):
     path = os.path.join(os.path.dirname(__file__), 'packages', package)
 
     if version:
         path = os.path.join(path, version)
 
-        if want_file:
-            path = os.path.join(path, '{}-{}.tar.gz'.format(package, version))
+        if filename:
+            path = os.path.join(path, filename)
+
+    # Don't allow filesystem traversal
+    if is_filesystem_traversal(path):
+        raise ValueError('Bad arguments')
 
     return path
 
 
 def generate_package_link(package, version):
-    return (
-        '<a href="/packages/{package}/{version}/{package}-{version}.tar.gz">'
-        '{package}-{version}</a><br />').format(
+    path = os.path.join(
+        os.path.dirname(__file__), 'packages', package, version,
+    )
+
+    # Don't allow filesystem traversal
+    if is_filesystem_traversal(path):
+        raise ValueError('Bad arguments')
+
+    dists = os.listdir(path)
+
+    links = [
+        ('<a href="/packages/{package}/{version}/{each_dist}">'
+        '{each_dist}</a><br />').format(
             package=xhtml_escape(package),
             version=xhtml_escape(version),
-            )
+            each_dist=xhtml_escape(each_dist),
+        ) for each_dist in dists
+    ]
+
+    return ''.join(links)
 
 
 class IndexHandler(RequestHandler):
@@ -57,7 +81,8 @@ class IndexHandler(RequestHandler):
         if name and version and content and action == 'file_upload':
             name = name.lower()
 
-            path = get_package_path(name, version, want_file=True)
+            filename = self.request.files['content'][0]['filename']
+            path = get_package_path(name, version, filename=filename)
 
             if not os.path.exists(os.path.dirname(path)):
                 os.makedirs(os.path.dirname(path))
@@ -120,7 +145,7 @@ class PypiPackageVersionHandler(RequestHandler):
     def get(self, package, version):
         package = package.lower()
 
-        path = get_package_path(package, version, want_file=True)
+        path = get_package_path(package, version)
 
         if os.path.exists(path):
             self.write(
@@ -184,8 +209,8 @@ class PackageList(RequestHandler):
 
 class PackageDownload(RequestHandler):
 
-    def get(self, name, version, _):
-        path = get_package_path(name, version, want_file=True)
+    def get(self, name, version, filename):
+        path = get_package_path(name, version, filename=filename)
         if not os.path.exists(path):
             write404(self)
             return
