@@ -1,7 +1,7 @@
 from setuptools import setup
 
 setup(name='simplepypi',
-        version='0.1.5',
+        version='0.1.6',
         author='Zach Steindler',
         author_email='steiza@coffeehousecoders.org',
         url='http://github.com/steiza/simplepypi',
