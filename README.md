@@ -36,6 +36,18 @@ To use it run "simplepypi". You can upload packages by:
 #### Then, when you want to install packages from it you do:
 
     pip install -i http://127.0.0.1:8000/pypi <your favorite package>
+    
+#### Or, if you're stuck in the stone ages with `setuptools`/`easy_install`:
+
+    from setuptools import setup
+
+    setup(
+        ...
+        install_requires=['<package>'],
+        dependency_links=['http://127.0.0.1:8000/packages/<package>'],
+    )
+    
+    python setup.py install
 
 #### To use the docker image, build and run:
 
