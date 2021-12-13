@@ -9,7 +9,7 @@ from tornado.ioloop import IOLoop
 from tornado.web import Application, RequestHandler
 
 
-def canonicalize_name(name):
+def normalize_name(name):
     return name.replace('.', '-').replace('_', '-').lower()
 
 
@@ -83,7 +83,7 @@ class IndexHandler(RequestHandler):
         content = self.request.files['content'][0]['body']
 
         if name and version and content and action == 'file_upload':
-            name = canonicalize_name(name)
+            name = normalize_name(name)
 
             filename = self.request.files['content'][0]['filename']
             path = get_package_path(name, version, filename=filename)
@@ -118,7 +118,7 @@ class PypiHandler(RequestHandler):
 class PypiPackageHandler(RequestHandler):
 
     def get(self, package):
-        package = canonicalize_name(package)
+        package = normalize_name(package)
 
         package_path = get_package_path(package)
 
@@ -147,7 +147,7 @@ class PypiPackageHandler(RequestHandler):
 class PypiPackageVersionHandler(RequestHandler):
 
     def get(self, package, version):
-        package = canonicalize_name(package)
+        package = normalize_name(package)
 
         path = get_package_path(package, version)
 
@@ -188,7 +188,7 @@ class PackageBase(RequestHandler):
 class PackageList(RequestHandler):
 
     def get(self, package):
-        package = canonicalize_name(package)
+        package = normalize_name(package)
 
         package_path = get_package_path(package)
 
